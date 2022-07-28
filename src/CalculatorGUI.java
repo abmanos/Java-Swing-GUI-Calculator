@@ -10,7 +10,10 @@ public class CalculatorGUI {
     int centY = (int) getScreenSize().getHeight();
     int defaultWidth = (int) (centX * 0.5);
     int defaultHeight = (int) (centY * 0.8);
+
     JFormattedTextField calculation = new JFormattedTextField();
+    Operations prevOperation;
+    double prevNum;
 
     public CalculatorGUI(){}
     public void setup() {
@@ -40,7 +43,7 @@ public class CalculatorGUI {
             button.setFont(button.getFont().deriveFont(centX/50+0.0f));
             button.setForeground(new Color(255,255,255));
             button.setBackground(new Color(33, 34, 41));
-            button.addActionListener(new ButtonPressListener(calculation, button.getText()));
+            button.addActionListener(new ButtonPressListener(this, button.getText()));
             buttons.add(button);
         }
         grid.add(buttons);
@@ -55,5 +58,29 @@ public class CalculatorGUI {
 
     private Dimension getScreenSize(){
         return Toolkit.getDefaultToolkit().getScreenSize();
+    }
+
+    public JFormattedTextField getCalculation() {
+        return calculation;
+    }
+
+    public void setCalculation(JFormattedTextField calculation) {
+        this.calculation = calculation;
+    }
+
+    public Operations getPrevOperation() {
+        return prevOperation;
+    }
+
+    public void setPrevOperation(Operations prevOperation) {
+        this.prevOperation = prevOperation;
+    }
+
+    public double getPrevNum() {
+        return prevNum;
+    }
+
+    public void setPrevNum(double prevNum) {
+        this.prevNum = prevNum;
     }
 }
