@@ -1,0 +1,59 @@
+import javax.swing.*;
+import javax.swing.text.JTextComponent;
+import java.awt.*;
+import java.sql.Array;
+import java.util.ArrayList;
+
+public class Calculator {
+    JFrame frame = new JFrame("My Calculator");
+    JPanel grid = new JPanel();
+    int centX = (int) getScreenSize().getWidth();
+    int centY = (int) getScreenSize().getHeight();
+    int defaultWidth = (int) (centX * 0.5);
+    int defaultHeight = (int) (centY * 0.8);
+    public Calculator(){}
+    public void setup() {
+        frame.setBackground(new Color(26, 26, 33));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setPreferredSize(new Dimension(defaultWidth, defaultHeight));
+        frame.setAlwaysOnTop(true);
+        frame.setLocation((centX/2) - defaultWidth/2, (centY/2) - defaultHeight/2);
+        grid.setLayout(new GridLayout(2,1,0,3));
+        frame.add(grid);
+        setupTextArea();
+        setupButtons();
+
+        frame.pack();
+        frame.setVisible(true);
+    }
+    private void setupButtons(){
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new GridLayout(6,5,0,0));
+        ArrayList<JButton> allButtons = new ArrayList<JButton>();
+        String[] buttonText = {"+", "-", "*", "/", "<-", "sqrt(x)", "x^2", "x!", "|x|", "π","7", "8", "9", "(", ")", "4", "5", "6", "e", "C", "1", "2", "3", "ln", "CE", "0", ".", "+/-", "%", "="};
+        for(String text : buttonText){
+            allButtons.add(new JButton(text));
+        }
+        buttons.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        for(JButton button : allButtons){
+            button.setFont(button.getFont().deriveFont(centX/50+0.0f));
+            button.setForeground(new Color(255,255,255));
+            button.setBackground(new Color(33, 34, 41));
+            //button.addActionListener();
+            buttons.add(button);
+        }
+        grid.add(buttons);
+    }
+
+    private void setupTextArea(){
+        JFormattedTextField calculation = new JFormattedTextField();
+        calculation.setForeground(new Color(255,255,255));
+        calculation.setBackground(new Color(42, 42, 54));
+        calculation.setFont(calculation.getFont().deriveFont(centX/10+0.0f));
+        grid.add(calculation);
+    }
+
+    private Dimension getScreenSize(){
+        return Toolkit.getDefaultToolkit().getScreenSize();
+    }
+}
