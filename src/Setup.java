@@ -1,6 +1,6 @@
 public class Setup {
     public static void main(String[] args) {
-        Calculator calc = new Calculator();
+        CalculatorGUI calc = new CalculatorGUI();
         javax.swing.SwingUtilities.invokeLater(() -> calc.setup());
     }
 }

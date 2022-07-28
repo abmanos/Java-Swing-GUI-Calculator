@@ -1,17 +1,18 @@
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
-import java.sql.Array;
 import java.util.ArrayList;
 
-public class Calculator {
+public class CalculatorGUI {
+
     JFrame frame = new JFrame("My Calculator");
     JPanel grid = new JPanel();
     int centX = (int) getScreenSize().getWidth();
     int centY = (int) getScreenSize().getHeight();
     int defaultWidth = (int) (centX * 0.5);
     int defaultHeight = (int) (centY * 0.8);
-    public Calculator(){}
+    JFormattedTextField calculation = new JFormattedTextField();
+
+    public CalculatorGUI(){}
     public void setup() {
         frame.setBackground(new Color(26, 26, 33));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,14 +40,13 @@ public class Calculator {
             button.setFont(button.getFont().deriveFont(centX/50+0.0f));
             button.setForeground(new Color(255,255,255));
             button.setBackground(new Color(33, 34, 41));
-            //button.addActionListener();
+            button.addActionListener(new ButtonPressListener(calculation, button.getText()));
             buttons.add(button);
         }
         grid.add(buttons);
     }
 
     private void setupTextArea(){
-        JFormattedTextField calculation = new JFormattedTextField();
         calculation.setForeground(new Color(255,255,255));
         calculation.setBackground(new Color(42, 42, 54));
         calculation.setFont(calculation.getFont().deriveFont(centX/10+0.0f));
