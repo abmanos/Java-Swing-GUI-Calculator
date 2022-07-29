@@ -30,32 +30,41 @@ public class ButtonPressListener implements ActionListener {
                 }
                 break;
             case "C":
+                gui.history.setText("");
                 gui.getCalculation().setText("");
                 break;
             case "CE":
+                gui.history.setText("");
                 gui.getCalculation().setText("");
                 gui.setCurrentAns(0);
                 gui.setPrevOperation(null);
                 break;
             case "+":
                 updateCurrentAnswer();
+                gui.history.setText(gui.getCurrentAns()+"+");
                 gui.setPrevOperation(Operations.PLUS);
                 gui.getCalculation().setText("");
                 break;
             case "-":
                 updateCurrentAnswer();
+                gui.history.setText(gui.getCurrentAns()+"-");
                 gui.setPrevOperation(Operations.MINUS);
                 gui.getCalculation().setText("");
                 break;
             case "*":
                 updateCurrentAnswer();
+                gui.history.setText(gui.getCurrentAns()+"*");
                 gui.setPrevOperation(Operations.MULTIPLY);
                 gui.getCalculation().setText("");
                 break;
             case "/":
                 updateCurrentAnswer();
+                gui.history.setText(gui.getCurrentAns()+"/");
                 gui.setPrevOperation(Operations.DIVIDE);
                 gui.getCalculation().setText("");
+                break;
+            case "+/-":
+
                 break;
             case "=":
                 updateCurrentAnswer();
@@ -84,5 +93,6 @@ public class ButtonPressListener implements ActionListener {
             }
         }
         System.out.println(gui.getCurrentAns());
+        gui.history.setText(gui.getCurrentAns()+"");
     }
 }

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CalculatorGUI {
 
@@ -11,9 +12,11 @@ public class CalculatorGUI {
     int defaultWidth = (int) (centX * 0.5);
     int defaultHeight = (int) (centY * 0.8);
 
+    JFormattedTextField history = new JFormattedTextField();
     JFormattedTextField calculation = new JFormattedTextField();
     Operations prevOperation;
     double currentAns;
+    HashMap<Operations, String> ops = new HashMap<Operations, String>();
 
     public CalculatorGUI(){}
     public void setup() {
@@ -22,10 +25,15 @@ public class CalculatorGUI {
         frame.setPreferredSize(new Dimension(defaultWidth, defaultHeight));
         frame.setAlwaysOnTop(true);
         frame.setLocation((centX/2) - defaultWidth/2, (centY/2) - defaultHeight/2);
-        grid.setLayout(new GridLayout(2,1,0,3));
+        grid.setLayout(new GridLayout(3,1,0,3));
         frame.add(grid);
-        setupTextArea();
+        setupTextAreas();
         setupButtons();
+
+        ops.put(Operations.PLUS, "+");
+        ops.put(Operations.MINUS, "-");
+        ops.put(Operations.MULTIPLY, "*");
+        ops.put(Operations.DIVIDE, "/");
 
         frame.pack();
         frame.setVisible(true);
@@ -49,11 +57,18 @@ public class CalculatorGUI {
         grid.add(buttons);
     }
 
-    private void setupTextArea(){
+    private void setupTextAreas(){
+        history.setForeground(new Color(255,255,255));
+        history.setBackground(new Color(42, 42, 54));
+        history.setFont(history.getFont().deriveFont(centX/25+0.0f));
+
         calculation.setForeground(new Color(255,255,255));
         calculation.setBackground(new Color(42, 42, 54));
-        calculation.setFont(calculation.getFont().deriveFont(centX/10+0.0f));
+        calculation.setFont(calculation.getFont().deriveFont(centX/25+0.0f));
+
+        grid.add(history);
         grid.add(calculation);
+
     }
 
     /*
