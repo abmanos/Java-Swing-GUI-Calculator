@@ -34,75 +34,55 @@ public class ButtonPressListener implements ActionListener {
                 break;
             case "CE":
                 gui.getCalculation().setText("");
-                gui.setPrevNum(0);
+                gui.setCurrentAns(0);
                 gui.setPrevOperation(null);
                 break;
             case "+":
-                multipleOperationHandler();
+                updateCurrentAnswer();
                 gui.setPrevOperation(Operations.PLUS);
-                gui.setPrevNum(Double.parseDouble(gui.getCalculation().getText()));
                 gui.getCalculation().setText("");
                 break;
             case "-":
-                multipleOperationHandler();
+                updateCurrentAnswer();
                 gui.setPrevOperation(Operations.MINUS);
-                gui.setPrevNum(Double.parseDouble(gui.getCalculation().getText()));
                 gui.getCalculation().setText("");
                 break;
             case "*":
-                multipleOperationHandler();
+                updateCurrentAnswer();
                 gui.setPrevOperation(Operations.MULTIPLY);
-                gui.setPrevNum(Double.parseDouble(gui.getCalculation().getText()));
                 gui.getCalculation().setText("");
                 break;
             case "/":
-                multipleOperationHandler();
+                updateCurrentAnswer();
                 gui.setPrevOperation(Operations.DIVIDE);
-                gui.setPrevNum(Double.parseDouble(gui.getCalculation().getText()));
                 gui.getCalculation().setText("");
                 break;
             case "=":
-                double answer;
-                switch (gui.getPrevOperation()){
-                    case PLUS:
-                        answer = gui.getPrevNum() + Double.parseDouble(gui.getCalculation().getText());
-                        gui.getCalculation().setText((answer+""));
-                        break;
-                    case MINUS:
-                        answer = gui.getPrevNum() - Double.parseDouble(gui.getCalculation().getText());
-                        gui.getCalculation().setText((answer+""));
-                        break;
-                    case MULTIPLY:
-                        answer = gui.getPrevNum() * Double.parseDouble(gui.getCalculation().getText());
-                        gui.getCalculation().setText((answer+""));
-                        break;
-                    case DIVIDE:
-                        answer = gui.getPrevNum() / Double.parseDouble(gui.getCalculation().getText());
-                        gui.getCalculation().setText((answer+""));
-                        break;
-                }
-                break;
-
+                updateCurrentAnswer();
+                gui.getCalculation().setText(gui.getCurrentAns()+"");
         }
 
     }
 
-    public void multipleOperationHandler() {
-        if(gui.getPrevOperation() != null){
+    public void updateCurrentAnswer(){
+        if(gui.getPrevOperation() == null){
+            gui.setCurrentAns(Double.parseDouble(gui.getCalculation().getText()));
+        } else {
             switch (gui.getPrevOperation()) {
                 case PLUS:
-                    gui.setPrevNum(gui.getPrevNum() + Double.parseDouble(gui.getCalculation().getText()));
+                    gui.setCurrentAns(gui.getCurrentAns() + Double.parseDouble(gui.getCalculation().getText()));
                     break;
                 case MINUS:
-                    gui.setPrevNum(gui.getPrevNum() - Double.parseDouble(gui.getCalculation().getText()));
+                    gui.setCurrentAns(gui.getCurrentAns() - Double.parseDouble(gui.getCalculation().getText()));
                     break;
                 case MULTIPLY:
-                    gui.setPrevNum(gui.getPrevNum() * Double.parseDouble(gui.getCalculation().getText()));
+                    gui.setCurrentAns(gui.getCurrentAns() * Double.parseDouble(gui.getCalculation().getText()));
                     break;
                 case DIVIDE:
-                    gui.setPrevNum(gui.getPrevNum() / Double.parseDouble(gui.getCalculation().getText()));
+                    gui.setCurrentAns(gui.getCurrentAns() / Double.parseDouble(gui.getCalculation().getText()));
                     break;
             }
         }
+        System.out.println(gui.getCurrentAns());
     }
 }

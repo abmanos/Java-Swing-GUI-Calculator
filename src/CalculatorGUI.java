@@ -13,7 +13,7 @@ public class CalculatorGUI {
 
     JFormattedTextField calculation = new JFormattedTextField();
     Operations prevOperation;
-    double prevNum;
+    double currentAns;
 
     public CalculatorGUI(){}
     public void setup() {
@@ -56,6 +56,9 @@ public class CalculatorGUI {
         grid.add(calculation);
     }
 
+    /*
+     * Getters & Setters
+     */
     private Dimension getScreenSize(){
         return Toolkit.getDefaultToolkit().getScreenSize();
     }
@@ -75,12 +78,13 @@ public class CalculatorGUI {
     public void setPrevOperation(Operations prevOperation) {
         this.prevOperation = prevOperation;
     }
-
-    public double getPrevNum() {
-        return prevNum;
+    public double getCurrentAns() {
+        return currentAns;
     }
 
-    public void setPrevNum(double prevNum) {
-        this.prevNum = prevNum;
+    public void setCurrentAns(double currentAns) {
+        this.currentAns = currentAns;
     }
+
+
 }
