@@ -67,8 +67,14 @@ public class ButtonPressListener implements ActionListener {
 
                 break;
             case "=":
-                updateCurrentAnswer();
-                gui.getCalculation().setText(gui.getCurrentAns()+"");
+                try {
+                    updateCurrentAnswer();
+                } catch (Exception exc){
+                    gui.getCalculation().setText("");
+                    gui.history.setText("Error: Invalid input, try again");
+                }
+                gui.setPrevOperation(null);
+                gui.getCalculation().setText("");
         }
 
     }
@@ -92,7 +98,6 @@ public class ButtonPressListener implements ActionListener {
                     break;
             }
         }
-        System.out.println(gui.getCurrentAns());
         gui.history.setText(gui.getCurrentAns()+"");
     }
 }

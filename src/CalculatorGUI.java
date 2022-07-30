@@ -16,7 +16,7 @@ public class CalculatorGUI {
     JFormattedTextField calculation = new JFormattedTextField();
     Operations prevOperation;
     double currentAns;
-    HashMap<Operations, String> ops = new HashMap<Operations, String>();
+
 
     public CalculatorGUI(){}
     public void setup() {
@@ -30,19 +30,19 @@ public class CalculatorGUI {
         setupTextAreas();
         setupButtons();
 
-        ops.put(Operations.PLUS, "+");
-        ops.put(Operations.MINUS, "-");
-        ops.put(Operations.MULTIPLY, "*");
-        ops.put(Operations.DIVIDE, "/");
-
         frame.pack();
         frame.setVisible(true);
     }
     private void setupButtons(){
         JPanel buttons = new JPanel();
-        buttons.setLayout(new GridLayout(6,5,0,0));
+        buttons.setLayout(new GridLayout(6,4,0,0));
         ArrayList<JButton> allButtons = new ArrayList<JButton>();
-        String[] buttonText = {"+", "-", "*", "/", "<-", "sqrt(x)", "x^2", "x!", "|x|", "π","7", "8", "9", "(", ")", "4", "5", "6", "e", "C", "1", "2", "3", "ln", "CE", "0", ".", "+/-", "%", "="};
+        String[] buttonText = {"☼", "C", "CE","<-",
+                               "Font", "X", "X", "+",
+                               "7", "8", "9", "-",
+                               "4", "5", "6", "*",
+                               "1", "2", "3", "/",
+                               ".", "0", "+/-", "="};
         for(String text : buttonText){
             allButtons.add(new JButton(text));
         }
