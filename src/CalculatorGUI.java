@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class CalculatorGUI {
 
-    JFrame frame = new JFrame("My Calculator");
+    JFrame frame = new JFrame("Java Swing Calculator");
     JPanel grid = new JPanel();
     int centX = (int) getScreenSize().getWidth();
     int centY = (int) getScreenSize().getHeight();
@@ -14,7 +14,7 @@ public class CalculatorGUI {
     JFormattedTextField calculation = new JFormattedTextField();
     ArrayList<JButton> allButtons = new ArrayList<JButton>();
     Operations prevOperation;
-    Font defaultTextFont = new Font(Font.MONOSPACED, Font.PLAIN, 75);
+    Font defaultTextFont = new Font(Font.MONOSPACED, Font.PLAIN, 85);
     Font defaultButtonFont = new Font(Font.MONOSPACED, Font.PLAIN, 35);
     String[] fontList = new String[]{Font.DIALOG, Font.SERIF, Font.MONOSPACED};
     int font = -1;
@@ -34,8 +34,6 @@ public class CalculatorGUI {
         frame.add(grid);
         setupTextAreas();
         setupButtons();
-
-
         frame.pack();
         frame.setVisible(true);
     }
