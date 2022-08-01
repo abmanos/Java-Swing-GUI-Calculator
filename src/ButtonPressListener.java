@@ -1,6 +1,8 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class ButtonPressListener implements ActionListener {
     CalculatorGUI gui;
@@ -13,72 +15,96 @@ public class ButtonPressListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int textLength = gui.getCalculation().getText().length();
+        JFormattedTextField calc = gui.calculation;
+        JFormattedTextField history = gui.history;
+        ArrayList<JButton> buttons = gui.allButtons;
+        String calcText = calc.getText();
+        int textLength = calcText.length();
 
         switch(text){
             case "9": case "8": case "7":
             case "6": case "5": case "4":
             case "3": case "2": case "1":
-            case "0": case "(": case ")":
-                gui.getCalculation().setText(gui.getCalculation().getText() + text);
+            case "0":
+                calc.setText(calcText + text);
                 break;
             case "<-":
-                if(gui.getCalculation().getText().charAt((gui.getCalculation().getText().length()-1)) == '.'){
+                if(calcText.charAt((calcText.length()-1)) == '.'){
                     gui.hasDecimal = false;
-                    System.out.println(gui.hasDecimal);
                 }
                 if(textLength <= 1){
-                    gui.getCalculation().setText("");
+                    calc.setText("");
                 } else {
-                    gui.getCalculation().setText(gui.getCalculation().getText().substring(0, textLength-1));
+                    calc.setText(calcText.substring(0, textLength-1));
                 }
                 break;
+            case "Font":
+                if(gui.font == 2){
+                    gui.font = 0;
+                } else {
+                    gui.font++;
+                }
+                Font buttonFont = new Font(gui.fontList[gui.font], Font.PLAIN, 35);
+                Font textFont = new Font(gui.fontList[gui.font], Font.PLAIN, 75);
+                gui.history.setFont(textFont);
+                gui.calculation.setFont(textFont);
+                for(JButton b : buttons){
+                    b.setFont(buttonFont);
+                }
+                break;
+            case "☼":
+
+                break;
             case "C":
-                gui.history.setText("");
-                gui.getCalculation().setText("");
+                history.setText("");
+                calc.setText("");
                 gui.hasDecimal = false;
                 break;
             case "CE":
-                gui.history.setText("");
-                gui.getCalculation().setText("");
+                history.setText("");
+                calc.setText("");
                 gui.setCurrentAns(0);
                 gui.setPrevOperation(null);
                 gui.hasDecimal = false;
                 break;
             case "+":
                 updateCurrentAnswer();
-                gui.history.setText(gui.getCurrentAns()+"+");
+                history.setText(gui.getCurrentAns()+"+");
                 gui.setPrevOperation(Operations.PLUS);
-                gui.getCalculation().setText("");
+                calc.setText("");
                 break;
             case "-":
                 updateCurrentAnswer();
-                gui.history.setText(gui.getCurrentAns()+"-");
+                history.setText(gui.getCurrentAns()+"-");
                 gui.setPrevOperation(Operations.MINUS);
-                gui.getCalculation().setText("");
+                calc.setText("");
                 break;
             case "*":
                 updateCurrentAnswer();
-                gui.history.setText(gui.getCurrentAns()+"*");
+                history.setText(gui.getCurrentAns()+"*");
                 gui.setPrevOperation(Operations.MULTIPLY);
-                gui.getCalculation().setText("");
+                calc.setText("");
                 break;
             case "/":
                 updateCurrentAnswer();
-                gui.history.setText(gui.getCurrentAns()+"/");
+                history.setText(gui.getCurrentAns()+"/");
                 gui.setPrevOperation(Operations.DIVIDE);
-                gui.getCalculation().setText("");
+                calc.setText("");
                 break;
             case "+/-":
-                if(gui.getCalculation().getText().charAt(0) == '-'){
-                    gui.getCalculation().setText(gui.getCalculation().getText().substring(1));
+                if(calcText.length() == 0){
+                    calc.setText("-");
+                    break;
+                }
+                if(calcText.charAt(0) == '-'){
+                    calc.setText(calcText.substring(1));
                 } else {
-                    gui.getCalculation().setText("-" + gui.getCalculation().getText());
+                    calc.setText("-" + calcText);
                 }
                 break;
             case ".":
                 if(!gui.hasDecimal){
-                    gui.getCalculation().setText(gui.getCalculation().getText()+".");
+                    calc.setText(calcText+".");
                     gui.hasDecimal = true;
                 }
                 break;
@@ -86,32 +112,34 @@ public class ButtonPressListener implements ActionListener {
                 try {
                     updateCurrentAnswer();
                 } catch (Exception exc){
-                    gui.getCalculation().setText("");
-                    gui.history.setText("Error: Invalid input, try again");
+                    calc.setText("");
+                    history.setText("Error: Invalid input, try again");
                 }
                 gui.setPrevOperation(null);
-                gui.getCalculation().setText("");
+                calc.setText("");
         }
 
     }
 
     public void updateCurrentAnswer(){
         gui.hasDecimal = false;
+        double currentAns = gui.getCurrentAns();
+        double currentCalc = Double.parseDouble(gui.calculation.getText());
         if(gui.getPrevOperation() == null){
-            gui.setCurrentAns(Double.parseDouble(gui.getCalculation().getText()));
+            gui.setCurrentAns(currentCalc);
         } else {
             switch (gui.getPrevOperation()) {
                 case PLUS:
-                    gui.setCurrentAns(gui.getCurrentAns() + Double.parseDouble(gui.getCalculation().getText()));
+                    gui.setCurrentAns(currentAns + currentCalc);
                     break;
                 case MINUS:
-                    gui.setCurrentAns(gui.getCurrentAns() - Double.parseDouble(gui.getCalculation().getText()));
+                    gui.setCurrentAns(currentAns - currentCalc);
                     break;
                 case MULTIPLY:
-                    gui.setCurrentAns(gui.getCurrentAns() * Double.parseDouble(gui.getCalculation().getText()));
+                    gui.setCurrentAns(currentAns * currentCalc);
                     break;
                 case DIVIDE:
-                    gui.setCurrentAns(gui.getCurrentAns() / Double.parseDouble(gui.getCalculation().getText()));
+                    gui.setCurrentAns(currentAns / currentCalc);
                     break;
             }
         }

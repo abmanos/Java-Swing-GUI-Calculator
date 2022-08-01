@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CalculatorGUI {
 
@@ -11,13 +10,16 @@ public class CalculatorGUI {
     int centY = (int) getScreenSize().getHeight();
     int defaultWidth = (int) (centX * 0.5);
     int defaultHeight = (int) (centY * 0.8);
-
     JFormattedTextField history = new JFormattedTextField();
     JFormattedTextField calculation = new JFormattedTextField();
+    ArrayList<JButton> allButtons = new ArrayList<JButton>();
     Operations prevOperation;
+    Font defaultTextFont = new Font(Font.SERIF, Font.PLAIN, 75);
+    Font defaultButtonFont = new Font(Font.SERIF, Font.PLAIN, 35);
+    String[] fontList = new String[]{Font.DIALOG, Font.MONOSPACED, Font.SERIF};
+    int font = 0;
     double currentAns;
     boolean hasDecimal = false;
-
 
     public CalculatorGUI(){}
     public void setup() {
@@ -31,13 +33,13 @@ public class CalculatorGUI {
         setupTextAreas();
         setupButtons();
 
+
         frame.pack();
         frame.setVisible(true);
     }
     private void setupButtons(){
         JPanel buttons = new JPanel();
         buttons.setLayout(new GridLayout(6,4,0,0));
-        ArrayList<JButton> allButtons = new ArrayList<JButton>();
         String[] buttonText = {"☼", "C", "CE","<-",
                                "Font", "X", "X", "+",
                                "7", "8", "9", "-",
@@ -49,7 +51,7 @@ public class CalculatorGUI {
         }
         buttons.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         for(JButton button : allButtons){
-            button.setFont(button.getFont().deriveFont(centX/50+0.0f));
+            button.setFont(defaultButtonFont);
             button.setForeground(new Color(255,255,255));
             button.setBackground(new Color(33, 34, 41));
             button.addActionListener(new ButtonPressListener(this, button.getText()));
@@ -61,11 +63,13 @@ public class CalculatorGUI {
     private void setupTextAreas(){
         history.setForeground(new Color(255,255,255));
         history.setBackground(new Color(42, 42, 54));
-        history.setFont(history.getFont().deriveFont(centX/25+0.0f));
+        history.setFont(defaultTextFont);
+        history.setEditable(false);
 
         calculation.setForeground(new Color(255,255,255));
         calculation.setBackground(new Color(42, 42, 54));
-        calculation.setFont(calculation.getFont().deriveFont(centX/25+0.0f));
+        calculation.setFont(defaultTextFont);
+        calculation.setEditable(false);
 
         grid.add(history);
         grid.add(calculation);
@@ -79,14 +83,6 @@ public class CalculatorGUI {
         return Toolkit.getDefaultToolkit().getScreenSize();
     }
 
-    public JFormattedTextField getCalculation() {
-        return calculation;
-    }
-
-    public void setCalculation(JFormattedTextField calculation) {
-        this.calculation = calculation;
-    }
-
     public Operations getPrevOperation() {
         return prevOperation;
     }
@@ -94,6 +90,7 @@ public class CalculatorGUI {
     public void setPrevOperation(Operations prevOperation) {
         this.prevOperation = prevOperation;
     }
+
     public double getCurrentAns() {
         return currentAns;
     }
