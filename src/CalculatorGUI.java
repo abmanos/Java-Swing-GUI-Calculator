@@ -16,6 +16,7 @@ public class CalculatorGUI {
     JFormattedTextField calculation = new JFormattedTextField();
     Operations prevOperation;
     double currentAns;
+    boolean hasDecimal = false;
 
 
     public CalculatorGUI(){}

@@ -23,6 +23,10 @@ public class ButtonPressListener implements ActionListener {
                 gui.getCalculation().setText(gui.getCalculation().getText() + text);
                 break;
             case "<-":
+                if(gui.getCalculation().getText().charAt((gui.getCalculation().getText().length()-1)) == '.'){
+                    gui.hasDecimal = false;
+                    System.out.println(gui.hasDecimal);
+                }
                 if(textLength <= 1){
                     gui.getCalculation().setText("");
                 } else {
@@ -32,12 +36,14 @@ public class ButtonPressListener implements ActionListener {
             case "C":
                 gui.history.setText("");
                 gui.getCalculation().setText("");
+                gui.hasDecimal = false;
                 break;
             case "CE":
                 gui.history.setText("");
                 gui.getCalculation().setText("");
                 gui.setCurrentAns(0);
                 gui.setPrevOperation(null);
+                gui.hasDecimal = false;
                 break;
             case "+":
                 updateCurrentAnswer();
@@ -64,7 +70,17 @@ public class ButtonPressListener implements ActionListener {
                 gui.getCalculation().setText("");
                 break;
             case "+/-":
-
+                if(gui.getCalculation().getText().charAt(0) == '-'){
+                    gui.getCalculation().setText(gui.getCalculation().getText().substring(1));
+                } else {
+                    gui.getCalculation().setText("-" + gui.getCalculation().getText());
+                }
+                break;
+            case ".":
+                if(!gui.hasDecimal){
+                    gui.getCalculation().setText(gui.getCalculation().getText()+".");
+                    gui.hasDecimal = true;
+                }
                 break;
             case "=":
                 try {
@@ -80,6 +96,7 @@ public class ButtonPressListener implements ActionListener {
     }
 
     public void updateCurrentAnswer(){
+        gui.hasDecimal = false;
         if(gui.getPrevOperation() == null){
             gui.setCurrentAns(Double.parseDouble(gui.getCalculation().getText()));
         } else {
