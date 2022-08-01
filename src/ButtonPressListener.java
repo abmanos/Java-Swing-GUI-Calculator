@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ButtonPressListener implements ActionListener {
     CalculatorGUI gui;
@@ -46,21 +47,45 @@ public class ButtonPressListener implements ActionListener {
                 }
                 Font buttonFont = new Font(gui.fontList[gui.font], Font.PLAIN, 35);
                 Font textFont = new Font(gui.fontList[gui.font], Font.PLAIN, 75);
-                gui.history.setFont(textFont);
-                gui.calculation.setFont(textFont);
+                history.setFont(textFont);
+                calc.setFont(textFont);
                 for(JButton b : buttons){
                     b.setFont(buttonFont);
                 }
                 break;
             case "☼":
-
+                if(gui.isLightMode){
+                    history.setForeground(new Color(255,255,255));
+                    history.setBackground(new Color(42, 42, 54));
+                    calc.setForeground(new Color(255,255,255));
+                    calc.setBackground(new Color(42, 42, 54));
+                    for(JButton button : buttons){
+                        button.setForeground(new Color(255,255,255));
+                        button.setBackground(new Color(33, 34, 41));
+                    }
+                    gui.isLightMode = false;
+                } else {
+                    history.setForeground(new Color(42, 42, 54));
+                    history.setBackground(new Color(255,255,255));
+                    calc.setForeground(new Color(42, 42, 54));
+                    calc.setBackground(new Color(255,255,255));
+                    for(JButton button : buttons){
+                        button.setForeground(new Color(33, 34, 41));
+                        button.setBackground(new Color(255,255,255));
+                    }
+                    gui.isLightMode = true;
+                }
                 break;
-            case "C":
-                history.setText("");
-                calc.setText("");
-                gui.hasDecimal = false;
+            case "RNG":
+                int RNG = ThreadLocalRandom.current().nextInt(0,10);
+                calc.setText(calcText + RNG);
                 break;
-            case "CE":
+            case "%":
+                double currentCalc = Double.parseDouble(gui.calculation.getText());
+                gui.hasDecimal = true;
+                calc.setText((currentCalc/100)+"");
+                break;
+            case "C": case "CE":
                 history.setText("");
                 calc.setText("");
                 gui.setCurrentAns(0);

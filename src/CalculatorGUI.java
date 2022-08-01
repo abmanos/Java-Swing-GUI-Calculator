@@ -14,10 +14,11 @@ public class CalculatorGUI {
     JFormattedTextField calculation = new JFormattedTextField();
     ArrayList<JButton> allButtons = new ArrayList<JButton>();
     Operations prevOperation;
-    Font defaultTextFont = new Font(Font.SERIF, Font.PLAIN, 75);
-    Font defaultButtonFont = new Font(Font.SERIF, Font.PLAIN, 35);
-    String[] fontList = new String[]{Font.DIALOG, Font.MONOSPACED, Font.SERIF};
-    int font = 0;
+    Font defaultTextFont = new Font(Font.MONOSPACED, Font.PLAIN, 75);
+    Font defaultButtonFont = new Font(Font.MONOSPACED, Font.PLAIN, 35);
+    String[] fontList = new String[]{Font.DIALOG, Font.SERIF, Font.MONOSPACED};
+    int font = -1;
+    boolean isLightMode = false;
     double currentAns;
     boolean hasDecimal = false;
 
@@ -28,7 +29,8 @@ public class CalculatorGUI {
         frame.setPreferredSize(new Dimension(defaultWidth, defaultHeight));
         frame.setAlwaysOnTop(true);
         frame.setLocation((centX/2) - defaultWidth/2, (centY/2) - defaultHeight/2);
-        grid.setLayout(new GridLayout(3,1,0,3));
+        grid.setLayout(new GridLayout(3,1,0,1));
+        grid.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         frame.add(grid);
         setupTextAreas();
         setupButtons();
@@ -39,9 +41,9 @@ public class CalculatorGUI {
     }
     private void setupButtons(){
         JPanel buttons = new JPanel();
-        buttons.setLayout(new GridLayout(6,4,0,0));
+        buttons.setLayout(new GridLayout(6,4,2,2));
         String[] buttonText = {"☼", "C", "CE","<-",
-                               "Font", "X", "X", "+",
+                               "Font", "RNG", "%", "+",
                                "7", "8", "9", "-",
                                "4", "5", "6", "*",
                                "1", "2", "3", "/",
@@ -65,11 +67,13 @@ public class CalculatorGUI {
         history.setBackground(new Color(42, 42, 54));
         history.setFont(defaultTextFont);
         history.setEditable(false);
+        history.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 
         calculation.setForeground(new Color(255,255,255));
         calculation.setBackground(new Color(42, 42, 54));
         calculation.setFont(defaultTextFont);
         calculation.setEditable(false);
+        calculation.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 
         grid.add(history);
         grid.add(calculation);
