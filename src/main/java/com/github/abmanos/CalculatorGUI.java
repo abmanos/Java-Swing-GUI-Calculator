@@ -1,3 +1,5 @@
+package com.github.abmanos;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
